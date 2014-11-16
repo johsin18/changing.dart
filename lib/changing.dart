@@ -86,6 +86,14 @@ class ChangingList<T extends Changing> extends ListBase<T> with Changing {
     return success;
   }
 
+  void clear() {
+    for (StreamSubscription s in _changeSubscriptions.values)
+      s.cancel();
+    _changeSubscriptions.clear();
+    super.clear();
+  }
+
+  // ListBase implements all List methods based on these four
   T operator[](int i) => _list[i];
   void operator[]=(int i, value) { _list[i] = value; }
   int get length => _list.length;
